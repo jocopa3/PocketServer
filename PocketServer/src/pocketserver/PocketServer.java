@@ -43,7 +43,7 @@ public class PocketServer implements Runnable {
         }
     }   
 
-    private void sleep(int i) {
+    public static void sleep(int i) {
         try { Thread.sleep(i); } catch (InterruptedException e) { }
     }
     

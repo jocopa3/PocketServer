@@ -10,43 +10,51 @@ import java.net.InetAddress;
  *
  * @author dev
  */
-class Player {
+public class Player {
     private InetAddress address;
     private int port;
     private long lastRead;
     private int timeout;
 
-    Player(InetAddress address, int port) {
+    public Player(InetAddress address, int port) {
         this.address = address;
         this.port = port;
     }
 
-    long getLastRead() {
+    public long getLastRead() {
         return this.lastRead;
     }
 
-    void increaseTimeout() {
+    public void increaseTimeout() {
         this.timeout++;
     }
 
-    int getTimeout() {
+    public int getTimeout() {
         return this.timeout;
     }
 
-    InetAddress getAddress() {
+    public InetAddress getAddress() {
         return this.address;
     }
 
-    void resetTimeout() {
-        this.timeout = 0;
-    }
-
-    void setLastRead(long time) {
+    public void setLastRead(long time) {
         this.lastRead = time;
     }
 
-    void setPort(int port) {
+    public void setPort(int port) {
         this.port = port;
+    }
+
+    public int getPort() {
+        return this.port;
+    }
+
+    void resetTimeout(int i) {
+        this.timeout = i;
+    }
+
+    void setAddress(InetAddress address) {
+        this.address = address;
     }
     
 }
