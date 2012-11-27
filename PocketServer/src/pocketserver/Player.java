@@ -1,15 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pocketserver;
 
 import java.net.InetAddress;
 
-/**
- *
- * @author dev
- */
 public class Player {
     private InetAddress address;
     private int port;
@@ -56,5 +48,4 @@ public class Player {
     void setAddress(InetAddress address) {
         this.address = address;
     }
-    
 }

@@ -1,19 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pocketserver.packets;
 
-import pocketserver.packets.Packet;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import pocketserver.Hex;
 import pocketserver.PacketHandler;
 
-/**
- *
- * @author dev
- */
 public class Packet1c extends Packet {
     private long pingID;
     private int packetType;

@@ -4,28 +4,29 @@ import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import pocketserver.*;
 
-public class Packet02 extends Packet{
+public class Packet05 extends Packet{
 
-    private long pingID;
     private byte[] magic;
-
+    private short mtuSize;
     private byte packetType;
+    private Player player;
 
-
-    public Packet02(DatagramPacket packet) {
+    public Packet05(DatagramPacket packet) {
         ByteBuffer bb = ByteBuffer.wrap(packet.getData());
         packetType = bb.get();
-        if (packetType != 0x02) { return; }
-        pingID = bb.getLong();
+        if (packetType != 0x05) { return; }
         magic = Hex.getMagicFromBuffer(bb);
+        bb.get();
+
+        mtuSize = (short)packet.getLength();
     }
 
     public DatagramPacket getPacket() {
-        ByteBuffer rData = ByteBuffer.allocate(25);
-        rData.put((byte)0x1c);
-        rData.putLong(pingID);
+        ByteBuffer rData = ByteBuffer.allocate(19);
+        rData.put((byte)0x06);
         rData.put(magic);
-        return new DatagramPacket(rData.array(),25);
+        rData.putShort(mtuSize);
+        return new DatagramPacket(rData.array(),19);
     }
 
     public void process(PacketHandler handler) {

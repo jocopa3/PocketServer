@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pocketserver;
 
 import java.net.DatagramPacket;
@@ -11,10 +7,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
-/**
- *
- * @author dev
- */
 class PESocket implements Runnable {
     
     private static final Logger logger = Logger.getLogger("PocketServer");
@@ -24,7 +16,6 @@ class PESocket implements Runnable {
     private DatagramSocket socket;
     public static DatagramPacket packet;
     private int portNumber = 19132;
-    //public static Player player;
     
     PESocket(PocketServer server) {
         this.server = server;

@@ -1,12 +1,11 @@
 package pocketserver;
 
-import pocketserver.packets.Packet02;
-import pocketserver.packets.Packet;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
+import pocketserver.packets.*;
 
 
 public class PacketHandler implements Runnable {
@@ -17,35 +16,44 @@ public class PacketHandler implements Runnable {
     private Player player;
     private boolean running = true;
     
-	
     public PacketHandler(DatagramSocket socket, DatagramPacket packet, Player player) {
         this.socket = socket;
         this.packet = packet;
         this.player = player;
     }
 
-    @Override
     public void run() {
         DatagramPacket p = packet;
         if (p != null) {
-//            player.setPort(packet.getPort());
-//            player.setAddress(packet.getAddress());
             process(p);
         } else {
             PocketServer.sleep(1); 
         }
     }
 
-    public void process(DatagramPacket pPacket) {
-        ByteBuffer data = ByteBuffer.wrap(pPacket.getData());
+    public void process(DatagramPacket p) {
+        ByteBuffer data = ByteBuffer.wrap(p.getData());
         int packetType = (data.get() & 0xFF);
-        String clientIP = pPacket.getAddress().toString().replaceAll("/", "");
         
         Packet response = null;
-            //byte[] responseData = null;
         switch (packetType) {
             case 0x02:
-                response = new Packet02(pPacket);
+                response = new Packet02(p);
+                break;
+            case 0x1c:
+                response = new Packet1c(p);
+                break;
+            case 0x05:
+                response = new Packet05(p);
+                break;
+            case 0x06:
+                response = new Packet06(p);
+                break;
+            case 0x07:
+                response = new Packet07(p);
+                break;
+            case 0x08:
+                response = new Packet08(p);
                 break;
             default:
                 logger.warning((new StringBuilder()).append("Unknown packet: ").append(packetType).append(" From: ").append(player.getAddress()).append(" Port: ").append(packet.getPort()).append(" Size: ").append(packet.getLength()).toString());

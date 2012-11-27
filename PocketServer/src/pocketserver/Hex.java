@@ -1,19 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pocketserver;
 
 import java.nio.ByteBuffer;
 
-/**
- *
- * @author dev
- */
 public class Hex {
 
     public static byte[] getMagicFromBuffer(ByteBuffer bb) {
         byte[] data = new byte[16];
+        bb.get(data);
+        return data;
+    }
+    
+    public static byte[] getCookieFromBuffer(ByteBuffer bb) {
+        byte[] data = new byte[4];
         bb.get(data);
         return data;
     }
