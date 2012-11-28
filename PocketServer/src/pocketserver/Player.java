@@ -7,6 +7,7 @@ public class Player {
     private int port;
     private long lastRead;
     private int timeout;
+    private String username;
 
     public Player(InetAddress address, int port) {
         this.address = address;
@@ -48,4 +49,13 @@ public class Player {
     void setAddress(InetAddress address) {
         this.address = address;
     }
+
+    public void setUsername(String name) {
+	this.username = name;
+    }
+    
+    public String getUsername() {
+	return this.username;
+    }
+    
 }

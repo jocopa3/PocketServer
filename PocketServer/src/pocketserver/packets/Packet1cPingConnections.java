@@ -1,11 +1,11 @@
 package pocketserver.packets;
 
+import pocketserver.PacketHandler;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import pocketserver.Hex;
-import pocketserver.PacketHandler;
 
-public class Packet1c extends Packet {
+public class Packet1cPingConnections extends Packet {
     private long pingID;
     private int packetType;
     private byte[] magic;
@@ -14,7 +14,7 @@ public class Packet1c extends Packet {
     String identifier = "MCCPP;MINECON;";
     String serverName = "PocketServer";
 
-    public Packet1c(DatagramPacket p) {
+    public Packet1cPingConnections(DatagramPacket p) {
         ByteBuffer bb = ByteBuffer.wrap(p.getData());
         packetType = bb.get();
         if (packetType != 0x1c) { return; }

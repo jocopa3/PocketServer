@@ -1,34 +1,36 @@
 package pocketserver.packets;
 
+import pocketserver.PacketHandler;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import pocketserver.*;
 
-public class Packet06 extends Packet{
+public class Packet05ConnectionRequest1 extends Packet{
+
     private byte[] magic;
-    private long serverID = 1L;
     private short mtuSize;
     private byte packetType;
+    private Player player;
 
-    public Packet06(DatagramPacket packet) {
+    public Packet05ConnectionRequest1(DatagramPacket packet) {
         ByteBuffer bb = ByteBuffer.wrap(packet.getData());
         packetType = bb.get();
-        if (packetType != 0x06) { return; }
+        if (packetType != 0x05) { return; }
         magic = Hex.getMagicFromBuffer(bb);
-        mtuSize = bb.getShort();
+        bb.get();
+
+        mtuSize = (short)packet.getLength();
     }
 
     public DatagramPacket getPacket() {
-        ByteBuffer rData = ByteBuffer.allocate(28);
+        ByteBuffer rData = ByteBuffer.allocate(19);
         rData.put((byte)0x06);
         rData.put(magic);
-        rData.putLong(serverID);
-        rData.put((byte)0x00);
         rData.putShort(mtuSize);
-        return new DatagramPacket(rData.array(),28);
+        return new DatagramPacket(rData.array(),19);
     }
 
     public void process(PacketHandler handler) {
-        handler.write(getPacket());
+        handler.process(getPacket());
     }
 }

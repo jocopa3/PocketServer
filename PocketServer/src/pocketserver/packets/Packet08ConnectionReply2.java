@@ -1,40 +1,42 @@
 package pocketserver.packets;
 
+import pocketserver.PacketHandler;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import pocketserver.Hex;
-import pocketserver.PacketHandler;
 
-public class Packet07 extends Packet {
-    
+public class Packet08ConnectionReply2 extends Packet {
     private byte packetType;
     private byte[] magic;
     private byte[] cookie;
     private short mtuSize;
-    private long clientID;
+    private long serverID = 1L;
+    private short clientPort;
     
-    
-    public Packet07(DatagramPacket packet) {
+    public Packet08ConnectionReply2(DatagramPacket packet) {
         ByteBuffer bb = ByteBuffer.wrap(packet.getData());
         packetType = bb.get();
-        if (packetType != 0x07) { return; }
+        if (packetType != 0x08) { return; }
         magic = Hex.getMagicFromBuffer(bb);
         cookie = Hex.getCookieFromBuffer(bb);
-        bb.get();
         mtuSize = bb.getShort();
-        clientID = bb.getLong();
+        clientPort = (short)packet.getPort();
     }
 
     public DatagramPacket getPacket() {
-        ByteBuffer b = ByteBuffer.allocate(23);
+        ByteBuffer b = ByteBuffer.allocate(35);
         b.put((byte)0x08);
         b.put(magic);
+        b.putLong(serverID);
         b.put(cookie);
+        b.put((byte)0xcd);
+        b.putShort(clientPort);
         b.putShort((short)mtuSize);
-        return new DatagramPacket(b.array(),23);
+        b.put((byte)0x00);
+        return new DatagramPacket(b.array(),35);
     }
-
+    
     public void process(PacketHandler handler) {
-        handler.process(getPacket());
+        handler.write(getPacket());
     }
 }

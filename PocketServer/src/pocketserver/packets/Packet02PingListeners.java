@@ -1,18 +1,17 @@
 package pocketserver.packets;
 
+import pocketserver.PacketHandler;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import pocketserver.*;
 
-public class Packet02 extends Packet{
+public class Packet02PingListeners extends Packet{
 
+    private byte packetType;
     private long pingID;
     private byte[] magic;
 
-    private byte packetType;
-
-
-    public Packet02(DatagramPacket packet) {
+    public Packet02PingListeners(DatagramPacket packet) {
         ByteBuffer bb = ByteBuffer.wrap(packet.getData());
         packetType = bb.get();
         if (packetType != 0x02) { return; }

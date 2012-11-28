@@ -8,8 +8,4 @@ public abstract class Packet {
     public void process(PacketHandler handler) {
         
     }
-
-    public void debug() {
-        
-    }
 }
